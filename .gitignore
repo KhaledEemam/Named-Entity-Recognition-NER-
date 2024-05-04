@@ -154,6 +154,7 @@ cython_debug/
 
 # setting
 .vscode/settings.json
+data
 
 
 # PyCharm
