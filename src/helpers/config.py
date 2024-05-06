@@ -8,7 +8,7 @@ class Settings(BaseSettings) :
     TAGS_COUNT :  int
     MAX_LENGTH : int
 
-    class config:
+    class Config:
         env_file = ".env"
 
 
