@@ -154,8 +154,7 @@ cython_debug/
 
 # setting
 .vscode/settings.json
-assets
-
+assets/trained_models/*
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
