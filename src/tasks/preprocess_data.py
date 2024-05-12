@@ -18,9 +18,6 @@ def align_labels_with_tokens(labels,word_ids) :
         # Current token came from the same word index as the prev one.
         else :
             label = labels[id]
-            # Check if the word tag starts with (B-) and convert it into (I-)
-            if label % 2 ==1 :
-                label += 1
 
             new_labels.append(label)
 
@@ -44,17 +41,20 @@ def process_data(RAW_DATA_PATH,bert_tokenizer,PREPROCESSED_DATA_PATH) :
 
     # Fill null values with the previous non null value for each column.
     data.ffill(axis=0,inplace=True)
-
+    
+    # Due to the imbalanced data, I'll select only 5 tags as labels for the NER task. 
+    # These 5 tags will be chosen because they represent the most frequent entities in the dataset.
+    # All other tags will be converted into 'O' (Outside) labels.
 
     # Map each tag to an index.
-    labels_to_ids = {'O': 0,'B-nat': 1 , 'I-nat' : 2, 'B-eve' : 3, 'I-eve': 4, 'B-art': 5, 'I-art' : 6, 'B-org': 7,
-    'I-org': 8 , 'B-tim': 9, 'I-tim' : 10, 'B-per': 11 , 'I-per': 12, 'B-geo': 13 , 'I-geo': 14 , 'B-gpe': 15 ,
-    'I-gpe': 16 }
+    labels_to_ids = {'O': 0, 'B-geo': 1 , 'I-geo': 1 ,'B-tim': 2, 'I-tim' : 2,'B-org': 3,
+                     'I-org': 3 , 'B-per': 4 , 'I-per': 4, 'B-gpe': 5 ,'I-gpe': 5 ,
+                     'B-nat': 0 , 'I-nat' : 0, 'B-eve' : 0, 'I-eve': 0, 'B-art': 0, 'I-art' : 0 }
 
+
+    # The 5 selected labels will be treated equally, with both B- (Beginning) and I- (Inside) entity tags considered for each label.
     # Get map for index to tag.
-    ids_to_labels = {}
-    for label , id in labels_to_ids.items() :
-        ids_to_labels[id] = label
+    ids_to_labels = {0 : 'O' , 1 : 'geo' , 2 : 'tim' , 3 : 'org' , 4 : 'per' , 5 : 'gpe'}
 
     # Map each tag label into it's corresponding index
     data["Tag"] = data["Tag"].map(labels_to_ids)
@@ -67,8 +67,11 @@ def process_data(RAW_DATA_PATH,bert_tokenizer,PREPROCESSED_DATA_PATH) :
     # Apply predefined function to tokenize each sentence and align the tags
     grouped_data["new_tags"] = grouped_data.apply(lambda x : tokenize_and_align_labels(bert_tokenizer,x) , axis = 1)
 
+    grouped_data["tokens"] = grouped_data["sentence"].apply(lambda x : bert_tokenizer(x, is_split_into_words = True)["input_ids"])
+
     # Drop column "Tags"
     grouped_data.drop("Tags",inplace=True,axis=1)
+
 
     # Save preprocessed dataframe
     grouped_data.to_csv(PREPROCESSED_DATA_PATH)
