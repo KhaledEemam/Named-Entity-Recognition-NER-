@@ -19,6 +19,7 @@ model = model.to(device)
 print("Model imported successfully.")
 
 bert_tokenizer = BertTokenizerFast.from_pretrained(settings.PRETRAINED_MODEL_NAME)
+torch.save(bert_tokenizer,settings.SAVED_TOKENIZER_PATH)
 preprocessed_data = process_data(settings.RAW_DATA_PATH,bert_tokenizer,settings.PREPROCESSED_DATA_PATH)
 #preprocessed_data = pd.read_csv(settings.PREPROCESSED_DATA_PATH)
 print("Data has been preprocessed and saved successfully.")
