@@ -1,52 +1,139 @@
-NER
+NER Project
 ==============================
 
-This project aims to detect the names of the entities included within a given text
+This project aims to detect the names of the entities included within a given text. I used two approaches in this project. The first is to try to train a BI-LSTM-CRF model, and the other one was fine-tuning the BertModel for this task which achieved 96% on f1_score evaluation metric. After observing both results, I decided to take the fine-tuned Bert model to the next step and create a FAST API to take the text input from the user and return the tags for each word in the input. The available tags the model was trained on are 'geo', 'tim', 'org', 'per', 'gpe', 'O', which represent "Geographical Entity", "Time", "Organization", "Person", "Geo-Political Entity", "Other" accordingly.
 
-Project Organization
+Project Structure
 ------------
+├── README.md
+├── requirements.txt
+└── src
+    ├── Notebooks
+    │   ├── 01-exploring_data.ipynb
+    │   └── __init__.py
+    ├── assets
+    │   ├── data
+    │   │   ├── preprocessed
+    │   │   │   └── preprocessed_NER_dataset.csv
+    │   │   └── raw
+    │   │       └── original_NER_dataset.csv
+    │   └── trained_models
+    │       ├── best_model.bin
+    │       └── tokenizer.bin
+    ├── controllers
+    │   ├── BaseController.py
+    │   ├── DataController.py
+    │   └── __init__.py
+    ├── helpers
+    │   ├── __init__.py
+    │   └── config.py
+    ├── main.py
+    ├── models
+    │   ├── __init__.py
+    │   ├── bert_model.py
+    │   └── enums
+    │       ├── ResponseEnums.py
+    │       └── __init__.py
+    ├── routes
+    │   ├── __init__.py
+    │   ├── base.py
+    │   └── labels_response.py
+    ├── tasks
+    │   ├── __init__.py
+    │   ├── build_dataset.py
+    │   ├── evaluate.py
+    │   ├── get_loader.py
+    │   ├── inference.py
+    │   ├── preprocess_data.py
+    │   └── train.py
+    └── train_and_evaluate.py
 
-    ├── README.md          <- The top-level README for developers using this project.
-    ├── data
-    │   ├── external       <- Data from third party sources.
-    │   ├── interim        <- Intermediate data that has been transformed.
-    │   ├── processed      <- The final, canonical data sets for modeling.
-    │   └── raw            <- The original, immutable data dump.
-    │
-    │
-    ├── models             <- Trained and serialized models, model predictions, or model summaries
-    │
-    ├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-    │                         the creator's initials, and a short `-` delimited description, e.g.
-    │                         `1.0-jqp-initial-data-exploration`.
-    │
-    ├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-    │   └── figures        <- Generated graphics and figures to be used in reporting
-    │
-    ├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-    │                         generated with `pip freeze > requirements.txt`
-    │
-    ├── setup.py           <- makes project pip installable (pip install -e .) so src can be imported
-    ├── src                <- Source code for use in this project.
-    │   ├── __init__.py    <- Makes src a Python module
-    │   │
-    │   ├── data           <- Scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features       <- Scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
-    │
-    └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
 
 
+Requirements
+==============================
+- Python 3.8 or later
+
+## Install Python using MiniConda
+
+1) Download and install MiniConda from [here](https://docs.anaconda.com/free/miniconda/#quick-command-line-install)
+2) Create a new environment using the following command:
+```bash
+$ conda create -n mini-rag python=3.8
+```
+3) Activate the environment:
+```bash
+$ conda activate mini-rag
+```
+
+## Installation
+
+### Install the required packages
+
+```bash
+$ pip install -r requirements.txt
+```
+
+### Setup the environment variables
+
+```bash
+$ cp .env.example .env
+```
+
+Set your environment variables in the `.env` file. Like RAW_DATA_PATH & PREPROCESSED_DATA_PATH.
+
+## Change directory to src
+
+```bash
+$ cd src
+```
+
+## Train your model
+
+```bash
+$ python main.py
+```
+
+## Run the FastAPI server
+
+```bash
+$ uvicorn main:app --reload --port 5000
+```
+
+## Impot the postman collection 
+- open Postman
+- Import the provided collection from "assets/postman collections/ner-app.postman_collection.json"
+- Navigate to the get_labels API
+- Enter your input text
+
+## Output Sample
+
+```bash
+Input : "Steve Jobs co-founded Apple Inc. in California."
+output : 
+{
+    "Valid": true,
+    "Message": {
+        "per": [
+            "steve",
+            "jobs"
+        ],
+        "O": [
+            "co",
+            "-",
+            "founded",
+            "in",
+            "."
+        ],
+        "org": [
+            "apple",
+            "inc",
+            "."
+        ],
+        "geo": [
+            "california"
+        ]
+    }
+}
+```
 --------
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
