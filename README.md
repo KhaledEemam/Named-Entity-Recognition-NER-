@@ -4,6 +4,7 @@ NER Project
 This project aims to detect the names of the entities included within a given text. I used two approaches in this project. The first is to try to train a BI-LSTM-CRF model, and the other one was fine-tuning the BertModel for this task which achieved 96% on f1_score evaluation metric. After observing both results, I decided to take the fine-tuned Bert model to the next step and create a FAST API to take the text input from the user and return the tags for each word in the input. Also I created a Dockerfile to facilitate the installation of project dependencies. The available tags the model was trained on are 'geo', 'tim', 'org', 'per', 'gpe', 'O', which represent "Geographical Entity", "Time", "Organization", "Person", "Geo-Political Entity", "Other" accordingly.
 
 Technologies stack :
+==============================
 * Python
 * Pytorch
 * FastAPI
@@ -11,7 +12,8 @@ Technologies stack :
 
 
 Project Structure
-------------
+==============================
+```bash
 ├── README.md
 ├── requirements.txt
 └── src
@@ -54,7 +56,7 @@ Project Structure
     │   ├── preprocess_data.py
     │   └── train.py
     └── train_and_evaluate.py
-
+```
 
 
 Requirements
@@ -72,7 +74,7 @@ $ conda create -n mini-rag python=3.8
 ```bash
 $ conda activate mini-rag
 ```
-## Make sure that you have installed CUDA and cuDNN. Also make sure that you have Docker installed on your device if you are going to folloe the Docker installation instructions.
+ Make sure that you have installed CUDA and cuDNN. Also make sure that you have Docker installed on your device if you are going to folloe the Docker installation instructions.
 
 # **Installation**
 
