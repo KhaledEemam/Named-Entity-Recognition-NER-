@@ -14,47 +14,51 @@ Technologies stack :
 Project Structure
 ==============================
 ```bash
+.
 ├── README.md
-├── requirements.txt
 └── src
+    ├── Dockerfile
     ├── Notebooks
-    │   ├── 01-exploring_data.ipynb
-    │   └── __init__.py
+    │   ├── 01-exploring_data.ipynb
+    │   └── __init__.py
     ├── assets
-    │   ├── data
-    │   │   ├── preprocessed
-    │   │   │   └── preprocessed_NER_dataset.csv
-    │   │   └── raw
-    │   │       └── original_NER_dataset.csv
-    │   └── trained_models
-    │       ├── best_model.bin
-    │       └── tokenizer.bin
+    │   ├── data
+    │   │   ├── preprocessed
+    │   │   │   └── preprocessed_NER_dataset.csv
+    │   │   └── raw
+    │   │       └── original_NER_dataset.csv
+    │   ├── postman collections
+    │   │   └── ner-app.postman_collection.json
+    │   └── trained_models
+    │       ├── best_model.bin
+    │       └── tokenizer.bin
     ├── controllers
-    │   ├── BaseController.py
-    │   ├── DataController.py
-    │   └── __init__.py
+    │   ├── BaseController.py
+    │   ├── DataController.py
+    │   └── __init__.py
     ├── helpers
-    │   ├── __init__.py
-    │   └── config.py
+    │   ├── __init__.py
+    │   └── config.py
     ├── main.py
     ├── models
-    │   ├── __init__.py
-    │   ├── bert_model.py
-    │   └── enums
-    │       ├── ResponseEnums.py
-    │       └── __init__.py
+    │   ├── __init__.py
+    │   ├── bert_model.py
+    │   └── enums
+    │       ├── ResponseEnums.py
+    │       └── __init__.py
+    ├── requirements.txt
     ├── routes
-    │   ├── __init__.py
-    │   ├── base.py
-    │   └── labels_response.py
+    │   ├── __init__.py
+    │   ├── base.py
+    │   └── labels_response.py
     ├── tasks
-    │   ├── __init__.py
-    │   ├── build_dataset.py
-    │   ├── evaluate.py
-    │   ├── get_loader.py
-    │   ├── inference.py
-    │   ├── preprocess_data.py
-    │   └── train.py
+    │   ├── __init__.py
+    │   ├── build_dataset.py
+    │   ├── evaluate.py
+    │   ├── get_loader.py
+    │   ├── inference.py
+    │   ├── preprocess_data.py
+    │   └── train.py
     └── train_and_evaluate.py
 ```
 
