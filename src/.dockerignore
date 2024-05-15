@@ -1,0 +1,5 @@
+assets/data/preprocessed/preprocessed_NER_dataset.csv
+assets/data/raw/original_NER_dataset.csv
+assets/trained_models/best_model.bin
+assets/trained_models/tokenizer.bin
+"assets/postman collections/ner-app.postman_collection.json"

@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "88b9c229-fff5-48c5-b0ed-6d1bb99c1f85",
+		"name": "ner-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34862911"
+	},
+	"item": [
+		{
+			"name": "Welcome request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_labels",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{api}}/get-labels?sentence=Steve Jobs co-founded Apple Inc. in California.",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"get-labels"
+					],
+					"query": [
+						{
+							"key": "sentence",
+							"value": "Steve Jobs co-founded Apple Inc. in California."
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api",
+			"value": "http://127.0.0.1:5000",
+			"type": "string"
+		}
+	]
+}
