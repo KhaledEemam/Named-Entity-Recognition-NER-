@@ -1,4 +1,4 @@
-from models.bert_model import BertModel
+from tasks.bert_model import BertModel
 from helpers.config import get_settings
 from transformers import BertTokenizer ,BertTokenizerFast
 from tasks import process_data
